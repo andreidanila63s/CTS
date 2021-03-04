@@ -1,11 +1,12 @@
 package ro.ase.csie.cts.g1093.laboratory.models;
 
+import ro.ase.csie.cts.g1093.laboratory.exceptions.IllegalTransferException;
 import ro.ase.csie.cts.g1093.laboratory.exceptions.InsufficientFundsException;
+import ro.ase.csie.cts.g1093.laboratory.interfaces.Protitable;
 
-public class SavingsAccount extends BankAccount{
+public class SavingsAccount extends BankAccount implements Protitable {
 	
 	public static final double MIN_BALANCE = 100;
-	
 	
 	public SavingsAccount(String iban) {
 		super(iban, MIN_BALANCE);
@@ -15,26 +16,32 @@ public class SavingsAccount extends BankAccount{
 	public void deposit(Double amount) {
 		this.balance += amount;
 		
-		
 	}
 
 	@Override
 	public void withdraw(Double amount) throws InsufficientFundsException {
-		this.balance += amount;
 		if(amount > this.balance) {
-			throw new InsufficientFundsException("you need more money");
-			
-		}else
+			throw new InsufficientFundsException("You need more money");
+		}
+		else
 			this.balance -= amount;
 		
 	}
 
 	@Override
-	public void transfer(Account destination, Double amount) {
-		// TODO Auto-generated method stub
+	public void transfer(Account destination, Double amount) throws InsufficientFundsException, IllegalTransferException{
+		if(this == destination) {
+			throw new IllegalTransferException();
+		}
+		this.withdraw(amount);
+		destination.deposit(amount);
+		
+	}
+
+	@Override
+	public void addInterest(double interestPercentRate) {
+		this.balance *= (1 + interestPercentRate/100);
 		
 	}
 	
-	
-
 }
