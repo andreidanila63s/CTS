@@ -1,5 +1,8 @@
 package ro.ase.csie.cts.g1093.laboratory3.stage1;
 
+import ro.ase.csie.cts.g1093.laboratory3.exceptions.InvalidAccountException;
+import ro.ase.csie.cts.g1093.laboratory3.exceptions.InvalidPriceException;
+
 public class Product {
 	
 	public static final int MAX_ACCOUNT_AGE = 10;
@@ -8,22 +11,49 @@ public class Product {
 	
 	
 	
-	public float getFinalPrice(int productType, float initialPrice, int accountAgeInyears) {
+	public float getFinalPrice(ProductType productType, float initialPrice, int accountAgeInyears) throws InvalidAccountException, InvalidPriceException {
+		
+		if(initialPrice <= 0) {
+			throw new InvalidPriceException();
+			
+		}
+		
+		if(accountAgeInyears < 0) {
+			throw new InvalidAccountException();
+			
+		}
+		
 		float finalPrice = 0;
 		float fidelityDiscount = (accountAgeInyears > MAX_ACCOUNT_AGE) ? MAX_FIDELITY_DISCOUNT : (float) accountAgeInyears / 100;
 		
-		if (productType == 1) {
+		float discountValue = 0;
+		
+		switch(productType) {
+		case NEW:
 			finalPrice = initialPrice;
-		} else if (productType == 2) {
-			finalPrice = (initialPrice - (0.1f * initialPrice))
-					- fidelityDiscount * (initialPrice - (0.1f * initialPrice));
-		} else if (productType == 3) {
-			finalPrice = (initialPrice - (0.25f * initialPrice))
-					- fidelityDiscount * (initialPrice - (0.25f * initialPrice));
-		} else if (productType == 4) {
-			finalPrice = (initialPrice - (0.35f * initialPrice))
-					- fidelityDiscount * (initialPrice - (0.35f * initialPrice));
+			break;
+		case DISCOUNT:
+			discountValue = ProductType.DISCOUNT.getDiscount();
+			finalPrice = (initialPrice - (discountValue * initialPrice))
+					- fidelityDiscount * (initialPrice - (discountValue * initialPrice));
+			break;
+		case LIMITED_STOCK:
+			discountValue = ProductType.LIMITED_STOCK.getDiscount();
+			finalPrice = (initialPrice - (discountValue * initialPrice))
+					- fidelityDiscount * (initialPrice - (discountValue * initialPrice));
+			break;
+		case LEGACY:
+			discountValue = ProductType.LEGACY.getDiscount();
+			finalPrice = (initialPrice - (discountValue * initialPrice))
+					- fidelityDiscount * (initialPrice - (discountValue * initialPrice));
+			break;
+			
+			default: 
+				throw new UnsupportedOperationException("new enum symbol not processed");
+		
 		}
+		
+		
 		
 		return finalPrice;
 	}
