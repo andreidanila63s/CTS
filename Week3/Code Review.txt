@@ -12,3 +12,7 @@ Stage 1. Naming Conventions
 - remove the hardcoded values aka 'magic nr' 
 
 - validate your imput values 
+- replace the if then else checks for thr prod type with switch 
+
+stage 2 . KISS, single responsibility -> reduce function complexity
+
