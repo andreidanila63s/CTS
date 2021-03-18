@@ -16,3 +16,15 @@ Stage 1. Naming Conventions
 
 stage 2 . KISS, single responsibility -> reduce function complexity
 
+- remove the switch by using a generic approach for each product type 
+out source the validations 
+out source the way the fidelity discount is comp
+
+stage3. dependency inversion principle (DIP)
+
+- remove the dependency regarding the validation of input values 
+- remove the dependency on the static values - they are given by the marketing team
+- remove the dependency on the way the fidelity discount is computed 
+
+ 
+
