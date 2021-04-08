@@ -29,6 +29,43 @@ public class SuperHero {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public static class SuperHeroBuilder {
+		SuperHero superHero;
+		
+		public SuperHeroBuilder(String name, int lifePoints) {
+			
+			this.superHero = new SuperHero();
+			this.superHero.name = name;
+			this.superHero.lifePoints = lifePoints;
+			
+			
+		}
+		
+		public void isVillain() {
+			this.superHero.isVillain = true;
+			
+		}
+		
+		
+	public SuperHeroBuilder isWounded() {
+		this.superHero.isWounded = true;
+		return this;
+	}
 	
+	public SuperHeroBuilder setLeftWeapon(WeaponInterface weapon) {
+		this.superHero.leftWeapon = weapon;
+		return this;
+	}
+
+	public SuperHeroBuilder setRightWeapon(WeaponInterface weapon) {
+		this.superHero.rightWeapon = weapon;
+		return this;
+	}
+	
+	public SuperHero build() {
+		return this.superHero;
+	}
+	
+	}
 
 }
