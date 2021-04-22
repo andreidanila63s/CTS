@@ -9,7 +9,7 @@ public class Pistol extends AbstactWeapon {
 
 	@Override
 	public void pewPew() {
-		System.out.println("prew prww");
+		// TODO Auto-generated method stub
 		
 	}
 	
